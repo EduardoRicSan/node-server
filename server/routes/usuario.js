@@ -8,10 +8,17 @@ const _ = require('underscore');
 //obteniendo el usuario
 const Usuario = require('../models/usuario');
 
+//middleware
+const { verificaToken, verificaAdmin_Role } = require('../middlewares/autenticacion');
+
 //Inicializando app 
 const app = express();
-app.get('/usuario', function(req, res) {
+
+
+app.get('/usuario', verificaToken, (req, res) => {
     ///Schema
+
+
 
     let desde = req.query.desde || 0; //Define la variable desde para que el usuario pueda decidir que pagina ver o si no lo hace, comenzar en la pág.0
     //Parseando la variable desde para que sea numérica
@@ -77,7 +84,7 @@ app.post('/usuario', function(req, res) {
 });
 
 //PUT funciona para actualizar registros 
-app.put('/usuario/:id', function(req, res) {
+app.put('/usuario/:id', [verificaToken, verificaAdmin_Role], function(req, res) {
 
     /**
      * Obteniendo el id mediante let nombreVariable =  req.params.x 
@@ -133,7 +140,7 @@ app.put('/usuario/:id', function(req, res) {
 // });
 
 
-app.delete('/usuario/:id', function(req, res) {
+app.delete('/usuario/:id', [verificaToken, verificaAdmin_Role], function(req, res) {
     //Obteniendo el id dado en la url
     let id = req.params.id;
 

@@ -20,8 +20,8 @@ app.use(bodyParser.json())
 //     res.json('Hello World')
 // });
 
-//importando el archivo usuario.js
-app.use(require('./routes/usuario'));
+//gonfiguración global de rutas
+app.use(require('./routes/index'));
 
 mongoose.connect(process.env.URLDB, { useNewUrlParser: true, useCreateIndex: true }, (err, res) => {
     if (err) throw err;
