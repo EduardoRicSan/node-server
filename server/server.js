@@ -4,6 +4,8 @@ const express = require('express')
     // Using Node.js `require()`
 const mongoose = require('mongoose');
 
+const path = require('path');
+
 
 const app = express();
 const bodyParser = require('body-parser');
@@ -19,6 +21,9 @@ app.use(bodyParser.json())
 // app.get('/', function(req, res) {
 //     res.json('Hello World')
 // });
+
+app.use(express.static(path.resolve(__dirname, '../public')));
+
 
 //gonfiguración global de rutas
 app.use(require('./routes/index'));
